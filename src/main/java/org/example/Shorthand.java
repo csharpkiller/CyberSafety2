@@ -3,17 +3,15 @@ package org.example;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
+import java.io.*;
 
 // https://stackoverflow.com/questions/40318507/how-do-i-change-color-of-a-particular-word-document-using-apache-poi
 public class Shorthand {
     private final String codeFont = "Times New Roman";
     private final String RED_COLOR_HEX = "DC143C";
     private final String BLACK_COLOR_HEX = "1F1E1E"; // 31, 30, 30 rgb
-    private String CURRENT_COLOR = RED_COLOR_HEX;
+    private String CURRENT_COLOR = BLACK_COLOR_HEX;
 
     public void code(String text){
         XWPFDocument readDoc;
@@ -88,21 +86,37 @@ public class Shorthand {
         }
     }
 
-    /*public void decode(){
+    public void decode(){
         XWPFDocument readDoc;
         try {
-            readDoc = new XWPFDocument(new FileInputStream("welcome.docx"));
+            readDoc = new XWPFDocument(new FileInputStream("coded.docx"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
 
         for(XWPFParagraph p : readDoc.getParagraphs()){
-            for(XWPFRun r: p.getRuns()){
-                System.out.println(r.getColor());
+            int runNumber = 0;
+            while (runNumber < p.getRuns().size()){
+                XWPFRun r = p.getRuns().get(runNumber);
+                if(r.getColor() != null && r.getColor().equals(BLACK_COLOR_HEX)){
+                    stringBuilder.append(r.text());
+                }
+                runNumber++;
             }
         }
-    }*/
+
+        try {
+            FileWriter writer = new FileWriter("decode.txt", false);
+
+            writer.write(stringBuilder.toString());
+
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("Возникла ошибка во время записи, проверьте данные.");
+        }
+    }
 
 }

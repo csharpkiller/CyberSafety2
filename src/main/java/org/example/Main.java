@@ -17,6 +17,8 @@ public class Main {
         }
         reader.close();
         line = sb.toString();
+
         shorthand.code(line);
+        shorthand.decode();
     }
 }
