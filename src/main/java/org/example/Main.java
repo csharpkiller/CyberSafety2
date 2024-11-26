@@ -20,5 +20,6 @@ public class Main {
 
         shorthand.code(line);
         shorthand.decode();
+        System.out.println("..");
     }
 }

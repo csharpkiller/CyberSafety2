@@ -111,9 +111,8 @@ public class Shorthand {
             FileWriter writer = new FileWriter("decode.txt", false);
 
             writer.write(stringBuilder.toString());
-
             writer.close();
-
+            System.out.println("decoded");
         } catch (IOException e) {
             System.out.println("Возникла ошибка во время записи, проверьте данные.");
         }
